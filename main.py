@@ -14,4 +14,4 @@ if __name__ == "__main__":
   channelToken = loadVar("channelToken.txt")
   IPAddr = socket.gethostbyname(socket.gethostname())
   ip = requests.get('https://checkip.amazonaws.com').text.strip()
-  bot.chat(channelToken).send(str(IPAddr) + str(ip) + " listening!")
+  bot.chat(channelToken).send(str(IPAddr) + " | " + str(ip) + " listening!")
