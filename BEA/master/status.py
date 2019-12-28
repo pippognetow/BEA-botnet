@@ -29,14 +29,14 @@ def download_requirements(username, token, level):
     id = consoles[1]
     obj = {"input":"pip3 install --user botogram2\n"}
     requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
-    obj = {"input":"cd\nrm -rf botnet\ngit clone https://github.com/pippognetow/botnet\n"}
+    obj = {"input":"cd\nrm -rf BEA-botnet\ngit clone https://github.com/pippognetow/BEA-botnet\n"}
     requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
-    obj = {"input":"cd botnet/bots\necho BOTOGRAM_TOKEN > assets/token.txt\necho CHANNEL_ID > assets/channelToken.txt\n"}
+    obj = {"input":"cd BEA-botnet/bots\necho BOTOGRAM_TOKEN > assets/token.txt\necho CHANNEL_ID > assets/channelToken.txt\n"}
     requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
     if level == "master":
         username = "MASTER_BOT_USERNAME"
         id = "MASTER_BOT_API_ID"
-        obj = {"input":"\3cd\nrm -rf botnet\ngit clone https://github.com/pippognetow/botnet\ncd botnet/master\necho BOTOGRAM_TOKEN > assets/token.txt\necho CHANNEL_ID > assets/channelToken.txt\necho 0 > assets/lastMessage.txt\npython3 main.py\n"}
+        obj = {"input":"\3cd\nrm -rf BEA-botnet\ngit clone https://github.com/pippognetow/BEA-botnet\ncd BEA-botnet/master\necho BOTOGRAM_TOKEN > assets/token.txt\necho CHANNEL_ID > assets/channelToken.txt\necho 0 > assets/lastMessage.txt\npython3 main.py\n"}
         requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
 
 def send_commands(username, token, commands):
@@ -47,7 +47,7 @@ def send_commands(username, token, commands):
         print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))
     id = consoles[1]
     if commands == None:
-        obj = {"input":"cd botnet\npython3 main.py\ncd\n"}
+        obj = {"input":"cd BEA-botnet/bots\npython3 main.py\ncd\n"}
     else:
         obj = {"input":commands}
     requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
