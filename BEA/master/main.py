@@ -44,7 +44,7 @@ def excec(chat, message, args):
     else:
         for instance in bots:
             pos = returnPos(bots, instance)
-            mex = chat.send("<code>Worker " + str(pos+1) + "</code>\nnExcecuting...")
+            mex = chat.send("<code>Worker " + str(pos+1) + "</code>\nExcecuting...")
             send_commands(instance, tokens[pos], None)
             mex.delete()
     chat.send("Done")
