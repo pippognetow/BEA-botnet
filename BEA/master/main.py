@@ -58,13 +58,13 @@ def update(chat, message, args):
             for instance in bots:
                 pos = returnPos(bots, instance)
                 mex = chat.send("<code>Worker " + str(pos+1) + "</code>\nDownloading Files...")
-                download_requirements(instance, tokens[pos], "master")
+                download_requirements(instance, tokens[pos], "master", pos)
                 mex.delete()
     else:
         for instance in bots:
             pos = returnPos(bots, instance)
             mex = chat.send("<code>Worker " + str(pos+1) + "</code>\nDownloading Files...")
-            download_requirements(instance, tokens[pos], None)
+            download_requirements(instance, tokens[pos], None, pos)
             mex.delete()
 
 @bot.command("whoslistening")
