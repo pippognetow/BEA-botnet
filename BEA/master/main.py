@@ -56,10 +56,10 @@ def update(chat, message, args):
     if len(args) > 0:
         if args[0] == "master":
             for instance in bots:
-            pos = returnPos(bots, instance, "master")
-            mex = chat.send("<code>Worker " + str(pos+1) + "</code>\nDownloading Files...")
-            download_requirements(instance, tokens[pos], None)
-            mex.delete()
+                pos = returnPos(bots, instance, "master")
+                mex = chat.send("<code>Worker " + str(pos+1) + "</code>\nDownloading Files...")
+                download_requirements(instance, tokens[pos], None)
+                mex.delete()
     else:
         for instance in bots:
             pos = returnPos(bots, instance, None)
