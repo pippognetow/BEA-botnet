@@ -35,7 +35,13 @@ def download_requirements(username, token, level):
     requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
     if level == "master":
         username = "MASTER_BOT_USERNAME"
-        id = "MASTER_BOT_API_ID"
+        token = "MASTER_BOT_API_ID"
+        response = requests.get('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/'.format(username=username), headers={'Authorization': 'Token {token}'.format(token=token)})
+        if response.status_code == 200:
+            consoles = re.split(":|,",response.content.decode("UTF-8"))
+        else:
+            print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))
+        id = consoles[1]
         obj = {"input":"\3cd\nrm -rf BEA-botnet\ngit clone https://github.com/pippognetow/BEA-botnet\ncd BEA-botnet/BEA/master\necho BOTOGRAM_TOKEN > assets/token.txt\necho CHANNEL_ID > assets/channelToken.txt\necho 0 > assets/lastMessage.txt\npython3 main.py\n"}
         requests.post('https://eu.pythonanywhere.com/api/v0/user/{username}/consoles/{id}/send_input/'.format(username=username, id=id), headers={'Authorization': 'Token {token}'.format(token=token)}, data=obj)
 
